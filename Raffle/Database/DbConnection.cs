@@ -6,6 +6,7 @@ namespace Raffle.Database
     public class DbConnection:DbContext
     {
         public DbSet<User> User {  get; set; }
+        public DbSet<Bet> Bet { get; set; }
 
         public string DbPath { get; }
 
@@ -21,5 +22,15 @@ namespace Raffle.Database
         // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configuração da relação "um para muitos" entre Bet e User
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Bets)
+                .WithOne(e => e.User)
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

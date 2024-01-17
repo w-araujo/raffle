@@ -10,6 +10,6 @@
 
         // Propriedades para representar a relação "um para muitos"
         public int UserId { get; set; } // Id do usuário associado à aposta
-        public User User { get; set; } // Propriedade de navegação para o usuário associado
+        public virtual User User { get; set; } // Propriedade de navegação para o usuário associado
     }
 }

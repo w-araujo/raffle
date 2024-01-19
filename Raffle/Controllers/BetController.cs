@@ -33,6 +33,27 @@ namespace Raffle.Controllers
             }
         }
 
+
+        [HttpGet("{id}", Name = "GetBet")]
+        public IActionResult GetBet(int id)
+        {
+            try
+            {
+                var bet = _dbConnection.Set<Bet>().Include(b => b.User).FirstOrDefault(b => b.Id == id);
+
+                if (bet == null)
+                {
+                    return NotFound($"Aposta com ID {id} não encontrada.");
+                }
+
+                return Ok(bet);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter a aposta: {ex.Message}");
+            }
+        }
+
         [HttpPost]
         public IActionResult CreateBet(int userId, [FromBody] Bet newBet)
         {
@@ -58,6 +79,32 @@ namespace Raffle.Controllers
                 _logger.LogError(ex, "ero ao criar uma aposta");
                 return BadRequest($"Erro ao criar uma aposta: {ex.Message}");
             }
+        }
+
+        [HttpDelete("{id}", Name = "DeletedBet")]
+        public IActionResult DeleteBet(int id)
+        {
+            try
+            {
+                var betToDelete = _dbConnection.Set<Bet>().Find(id);
+
+                if (betToDelete == null)
+                {
+                    return NotFound($"Aposta com ID {id} não encontrada.");
+                }
+
+                _dbConnection.Set<Bet>().Remove(betToDelete);
+                _dbConnection.SaveChanges();
+
+                return Ok($"Aposta com ID {id} removida com sucesso.");
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao excluir a aposta: {ex.Message}");
+            }
+
+
         }
 
 

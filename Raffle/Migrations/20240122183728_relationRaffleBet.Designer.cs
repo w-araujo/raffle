@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Raffle.Database;
 
@@ -10,9 +11,11 @@ using Raffle.Database;
 namespace Raffle.Migrations
 {
     [DbContext(typeof(DbConnection))]
-    partial class DbConnectionModelSnapshot : ModelSnapshot
+    [Migration("20240122183728_relationRaffleBet")]
+    partial class relationRaffleBet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -45,7 +48,7 @@ namespace Raffle.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bet", (string)null);
+                    b.ToTable("Bet");
                 });
 
             modelBuilder.Entity("Raffle.Models.User", b =>
@@ -74,7 +77,7 @@ namespace Raffle.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Raffle.Models.Bet", b =>

@@ -7,6 +7,7 @@ namespace Raffle.Database
     {
         public DbSet<User> User {  get; set; }
         public DbSet<Bet> Bet { get; set; }
+        public DbSet<Raffle1> Raffle1 { get; set; }
 
         public string DbPath { get; }
 
@@ -30,6 +31,13 @@ namespace Raffle.Database
                 .HasMany(e => e.Bets)
                 .WithOne(e => e.User)
                 .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configuração da relação "um para muitos" entre Bet e Raffle1
+            modelBuilder.Entity<Raffle1>()
+                .HasMany(e => e.Bets)
+                .WithOne(e => e.Raffle1)
+                .HasForeignKey("RaffleId")
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

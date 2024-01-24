@@ -32,5 +32,20 @@ namespace Raffle.Controllers
                 return BadRequest($"Erro ao listar os sorteios: {ex.Message}");
             }
         }
+
+        [HttpPost]
+        public IActionResult CreateRaffle([FromBody] Raffle1 newRaffle)
+        {
+            try
+            {
+                _dbConnection.Raffle1.Add(newRaffle);
+                _dbConnection.SaveChanges();
+                return Ok(newRaffle);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao criar o sorteio: {ex.Message}");
+            }
+        }
     }
     }

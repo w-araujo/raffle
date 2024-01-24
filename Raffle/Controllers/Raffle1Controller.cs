@@ -9,10 +9,10 @@ namespace Raffle.Controllers
     [Route("api/[controller]")]
     public class Raffle1Controller : ControllerBase
     {
-        private readonly ILogger<BetController> _logger;
+        private readonly ILogger<Raffle1Controller> _logger;
         private readonly DbConnection _dbConnection;
 
-        public Raffle1Controller(ILogger<BetController> logger, DbConnection dbConnection)
+        public Raffle1Controller(ILogger<Raffle1Controller> logger, DbConnection dbConnection)
         {
             _logger = logger;
             _dbConnection = dbConnection;

@@ -13,6 +13,6 @@
         public virtual User User { get; set; } // Propriedade de navegação para o usuário associado
 
         public int RaffleId { get; set; } // Id do sorteio associado à aposta
-        public virtual Raffle1 Raffle1 { get; } // Propriedade de navegação para o sorteio associado
+        public virtual Raffle1 Raffle1 { get; set; } // Propriedade de navegação para o sorteio associado
     }
 }

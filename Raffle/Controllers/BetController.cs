@@ -55,19 +55,26 @@ namespace Raffle.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBet(int userId, [FromBody] Bet newBet)
+        public IActionResult CreateBet(int userId, int raffleId, [FromBody] Bet newBet)
         {
             try
             {
                 var existingUser = _dbConnection.Set<User>().Find(userId);
 
-                Console.WriteLine(existingUser);
                 if (existingUser == null)
                 {
                     return NotFound($"Usuário com ID {userId} não encontrado.");
                 }
 
+                var existingRaffle = _dbConnection.Set<Raffle1>().Find(raffleId);
+
+                if (existingRaffle == null)
+                {
+                    return NotFound($"Sorteio com ID {raffleId} não encontrado.");
+                }
+
                  newBet.User = existingUser;
+                 newBet.Raffle1 = existingRaffle;
 
                 _dbConnection.Bet.Add(newBet);
                 _dbConnection.SaveChanges();

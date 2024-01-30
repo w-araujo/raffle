@@ -33,6 +33,26 @@ namespace Raffle.Controllers
             }
         }
 
+        [HttpGet("{id}", Name = "GetRaffle")]
+        public IActionResult GetRaffle(int id)
+        {
+            try
+            {
+                var raffle = _dbConnection.Set<Raffle1>().Find(id);
+
+                if (raffle == null)
+                {
+                    return NotFound($"O sorteio com ID {id} não encontrado.");
+                }
+
+                return Ok(raffle);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter o sorteio: {ex.Message}");
+            }
+        }
+
         [HttpPost]
         public IActionResult CreateRaffle([FromBody] Raffle1 newRaffle)
         {

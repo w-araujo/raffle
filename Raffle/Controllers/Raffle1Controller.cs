@@ -67,5 +67,32 @@ namespace Raffle.Controllers
                 return BadRequest($"Erro ao criar o sorteio: {ex.Message}");
             }
         }
+
+
+        [HttpDelete("{id}", Name = "DeletedRaffle")]
+        public IActionResult DeleteRaffle(int id)
+        {
+            try
+            {
+                var raffleToDelete = _dbConnection.Set<Raffle1>().Find(id);
+
+                if (raffleToDelete == null)
+                {
+                    return NotFound($"Sorteio com ID {id} não encontrado.");
+                }
+
+                _dbConnection.Set<Raffle1>().Remove(raffleToDelete);
+                _dbConnection.SaveChanges();
+
+                return Ok($"Sorteio com ID {id} removido com sucesso.");
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao excluir o sorteio: {ex.Message}");
+            }
+
+
+        }
     }
     }

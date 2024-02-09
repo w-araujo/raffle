@@ -68,6 +68,35 @@ namespace Raffle.Controllers
             }
         }
 
+        [HttpPut("{id}", Name = "UpdatedRaffle")]
+        public IActionResult UpdateRaffle(int id, [FromBody] Raffle1 updatedRaffle)
+        {
+            try
+            {
+                var existingRaffle = _dbConnection.Set<Raffle1>().Find(id);
+
+                if (existingRaffle == null)
+                {
+                    return NotFound($"Sorteio com ID {id} não encontrado.");
+                }
+
+                existingRaffle.prizeValue = updatedRaffle.prizeValue;
+                existingRaffle.dataRaffle = updatedRaffle.dataRaffle;
+                existingRaffle.result = updatedRaffle.result;
+                existingRaffle.UpdatedAt = updatedRaffle.UpdatedAt;
+
+                _dbConnection.SaveChanges();
+
+                return Ok(existingRaffle);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao atualizar o sorteio: {ex.Message}");
+
+            }
+
+        }
+
 
         [HttpDelete("{id}", Name = "DeletedRaffle")]
         public IActionResult DeleteRaffle(int id)

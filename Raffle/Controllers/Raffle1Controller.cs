@@ -49,7 +49,7 @@ namespace Raffle.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Erro ao obter o sorteio: {ex.Message}");
+                return BadRequest($"Erro ao buscar o sorteio: {ex.Message}");
             }
         }
 

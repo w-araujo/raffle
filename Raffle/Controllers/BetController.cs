@@ -83,7 +83,7 @@ namespace Raffle.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "ero ao criar uma aposta");
+                _logger.LogError(ex, "ero ao criar uma aposta!");
                 return BadRequest($"Erro ao criar uma aposta: {ex.Message}");
             }
         }
